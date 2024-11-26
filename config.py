@@ -1,4 +1,3 @@
-# config.py
 import os
 
 # Secret key for JWT encoding/decoding
