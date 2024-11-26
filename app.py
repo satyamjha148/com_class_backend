@@ -8,9 +8,20 @@ from bson import ObjectId  # Import ObjectId to handle MongoDB _id
 from model.user_model import create_user, user_exists
 
 app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb://localhost:27017/comclass"
+app.config["MONGO_URI"] = "mongodb+srv://satyamjha9911:KOH4b6stO7WmHIJt@comclassdb.2moas.mongodb.net/?retryWrites=true&w=majority&appName=comclassdb"
 app.config["SECRET_KEY"] = SECRET_KEY
 mongo = PyMongo(app)
+
+
+
+@app.route('/test_connection', methods=['GET'])
+def test_connection():
+    try:
+        mongo.db.command('ping')  # A simple command to check connection
+        return jsonify({"message": "MongoDB is connected"}), 200
+    except Exception as e:
+        return jsonify({"error": f"MongoDB connection failed: {str(e)}"}), 500
+
 
 # Endpoint to register a user
 @app.route('/register', methods=['POST'])
