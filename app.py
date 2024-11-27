@@ -17,7 +17,10 @@ app.config["SECRET_KEY"] = SECRET_KEY
 
 # Initialize the MongoDB connection
 mongo = PyMongo(app)
-client = MongoClient('mongodb+srv://satyamjha9911:KOH4b6stO7WmHIJt@comclassdb.2moas.mongodb.net/?retryWrites=true&w=majority&appName=comclassdb')
+client = MongoClient('mongodb+srv://satyamjha9911:KOH4b6stO7WmHIJt@comclassdb.2moas.mongodb.net/?retryWrites=true&w=majority&appName=comclassdb', 
+ tls=True,
+tlsAllowInvalidCertificates=True
+)
 db = client['sample_airbnb']
 collection = db.list_collections()
 print(f'client is {collection}')
