@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_pymongo import PyMongo
+from pymongo import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
 from config import MONGO_URI, SECRET_KEY
 from auth import generate_token
@@ -16,12 +17,16 @@ app.config["SECRET_KEY"] = SECRET_KEY
 
 # Initialize the MongoDB connection
 mongo = PyMongo(app)
+client = MongoClient('mongodb+srv://satyamjha9911:KOH4b6stO7WmHIJt@comclassdb.2moas.mongodb.net/?retryWrites=true&w=majority&appName=comclassdb')
+db = client['sample_airbnb']
+collection = db.list_collections()
+print(f'client is {collection}')
 
 # Route to test MongoDB connection
 @app.route('/test_connection', methods=['GET'])
 def test_connection():
     try:
-        mongo.db.command('ping')  # A simple command to check connection
+        client.admin.command('ping')  # Test MongoDB connection
         return jsonify({"message": "MongoDB is connected"}), 200
     except Exception as e:
         return jsonify({"error": f"MongoDB connection failed: {str(e)}"}), 500
